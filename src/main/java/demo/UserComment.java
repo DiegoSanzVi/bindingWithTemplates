@@ -66,4 +66,14 @@ public class UserComment {
     public int hashCode() {
         return Objects.hash(getEmail(), getFirstName(), getLastName(), getComment());
     }
+
+    @Override
+    public String toString() {
+        return "UserComment{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

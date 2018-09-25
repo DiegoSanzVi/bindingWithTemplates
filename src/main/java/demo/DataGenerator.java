@@ -5,7 +5,7 @@ import java.util.List;
 import org.jfairy.Fairy;
 import org.jfairy.producer.person.Person;
 
-public class UserCommentRepository {
+public class DataGenerator {
 
     private static final Fairy fairy = Fairy.create();
     private static final String COMMENT= "Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah";

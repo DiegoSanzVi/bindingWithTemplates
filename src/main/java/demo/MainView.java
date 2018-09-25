@@ -6,7 +6,9 @@ import java.util.Optional;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.polymertemplate.Id;
@@ -26,47 +28,66 @@ public class MainView extends PolymerTemplate<TemplateModel> {
 
 
     @Id("formComponent")
-    private FormComponent formComponent;
+    private FormComponent commentForm;
 
     @Id("vaadinGrid")
-    private Grid<UserComment> commentsGrid;
+    private CommentsGrid commentsGrid;
 
     public MainView() {
-        initGrid();
-        initForm();
-    }
-
-    ListDataProvider<UserComment> dataProvider;
-    List<UserComment> userCommentList;
-
-    private void initGrid(){
-        commentsGrid.addColumn(UserComment::getEmail);
-        commentsGrid.addColumn(UserComment::getFirstName);
-        commentsGrid.addColumn(UserComment::getLastName);
-
-        commentsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
-
         commentsGrid.addSelectionListener(selectionEvent -> {
-            Optional<UserComment> selectedItem = selectionEvent.getFirstSelectedItem();
-            if ( selectedItem.isPresent() ){
-                formComponent.setUserComment(selectedItem.get());
+            Optional<UserComment> optionalUser = commentsGrid.getSelectedItems().stream().findAny();
+
+            if (optionalUser.isPresent()){
+                commentForm.setBean(optionalUser.get());
+                setEditionEnabled(true);
+            }else{
+                commentForm.removeBean();
+                setEditionEnabled(false);
             }
         });
 
-        userCommentList = UserCommentRepository.getUserComments();
-        dataProvider =  DataProvider.ofCollection(userCommentList);
-
-        commentsGrid.setDataProvider(dataProvider);
+        initListeners();
     }
 
-    private void initForm(){
-        formComponent.addDeleteListener(()->{
-            userCommentList.remove(commentsGrid.getSelectedItems().stream().findFirst().get());
-            dataProvider.refreshAll();
+    private void initListeners(){
+        FormButtonsBar formButtonsBar = commentForm.getActionButtons();
+
+        formButtonsBar.addSaveListener(saveEvent -> {
+            System.out.println("Saving: ");
+            if ( ! commentForm.getBinder().validate().isOk()){
+                return;
+            }
+
+            Optional<UserComment> optionalUserComment = commentForm.getBean();
+
+            if ( optionalUserComment.isPresent() ){
+                System.out.println(optionalUserComment.get());
+                UserComment userComment = optionalUserComment.get();
+
+                userComment = UsersCommentsRepository.save( userComment );
+
+                commentsGrid.refreshAll();
+                commentForm.setBean( userComment);
+            }
         });
 
-        formComponent.addSaveListener(()->{
-           // commentsGrid.getDataProvider().refreshItem();
+        formButtonsBar.addCancelListener(cancelEvent -> {
+            commentsGrid.deselectAll();
         });
+
+        formButtonsBar.addDeleteListener(deleteEvent -> {
+            Optional<UserComment> optionalUserComment = commentsGrid.getSelectedItems().stream().findAny();
+
+            if ( optionalUserComment.isPresent() ){
+                UsersCommentsRepository.delete( optionalUserComment.get() );
+                commentsGrid.refreshAll();
+                commentForm.removeBean();
+                commentsGrid.deselectAll();
+            }
+        });
+    }
+
+    public void setEditionEnabled(boolean enabled){
+        commentForm.setEnabled(enabled);
     }
 }

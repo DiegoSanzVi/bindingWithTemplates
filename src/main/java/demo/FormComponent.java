@@ -1,11 +1,14 @@
 package demo;
 
+import java.util.Optional;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -65,12 +68,35 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
                 .bind(UserComment::getComment, UserComment::setComment);
     }
 
-    public void setUserComment(UserComment userCommnet) {
-        binder.setBean(userCommnet);
+    public void setBean(UserComment userComment){
+        binder.setBean(userComment);
+    }
+
+    public void removeBean(){
+        binder.removeBean();
+    }
+
+    public void setEnabled(boolean enabled){
+        email.setEnabled(enabled);
+        firstName.setEnabled(enabled);
+        lastName.setEnabled(enabled);
+        comment.setEnabled(enabled);
+
+        actionButtons.setCancelDisabled(!enabled);
+        actionButtons.setSaveDisabled(!enabled);
+        actionButtons.setDeleteDisabled(!enabled);
     }
 
     public FormButtonsBar getActionButtons() {
         return actionButtons;
+    }
+
+    public Optional<UserComment> getBean(){
+        return Optional.of(binder.getBean());
+    }
+
+    public Binder<UserComment> getBinder() {
+        return binder;
     }
 
     public void initListeners() {
@@ -107,6 +133,7 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
     public void addDeleteListener(Method method) {
         deleteMethod = method;
     }
+
 
     /**
      * This model binds properties between FormComponent and form-component.html
