@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="form-component.html">
+
+<dom-module id="main-view">
+    <template>
+        <style>
+            #form-container {
+                width: 50%;
+                background-color: red;
+            }
+        </style>
+<div id="form-container">
+ <form-component></form-component>
+</div>
+</template>
+
+    <script>
+        class MainView extends Polymer.Element {
+            static get is() {
+                return 'main-view';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+        customElements.define(MainView.is, MainView);
+    </script>
+</dom-module>
