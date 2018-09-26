@@ -11,11 +11,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.templatemodel.TemplateModel;
-import com.vaadin.flow.tutorial.binder.data.UserComment;
+import com.vaadin.flow.tutorial.binder.data.User;
 
-@Tag("form-component")
-@HtmlImport("src/form-component.html")
-public class FormComponent extends PolymerTemplate<FormComponent.FormComponentModel> {
+@Tag("user-form")
+@HtmlImport("src/user-form.html")
+public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
 
     @Id("email")
     private TextField email;
@@ -33,7 +33,7 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
     private FormButtonsBar actionButtons;
 
 
-    private Binder<UserComment> binder;
+    private Binder<User> binder;
 
     private Method saveMethod;
     private Method deleteMethod;
@@ -41,7 +41,7 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
     /**
      * Creates a new FormComponent.
      */
-    public FormComponent() {
+    public UserForm() {
         initBinder();
         initListeners();
     }
@@ -52,23 +52,23 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
         // email
         binder.forField(email).withValidator(
                 new EmailValidator(    "This doesn't look like a valid email address")
-        ).bind(UserComment::getEmail, UserComment::setEmail);
+        ).bind(User::getEmail, User::setEmail);
 
         // firstName
         binder.forField(firstName).withValidator( firstName -> firstName.length() > 1,
                 "The first name must contains at least 2 characters").asRequired()
-                .bind(UserComment::getFirstName, UserComment::setFirstName);
+                .bind(User::getFirstName, User::setFirstName);
 
         // lastName
         binder.forField(lastName).asRequired("It can not be empty")
-                .bind(UserComment::getLastName, UserComment::setLastName);
+                .bind(User::getLastName, User::setLastName);
 
         // comment
         binder.forField(comment).asRequired("It can not be empty")
-                .bind(UserComment::getComment, UserComment::setComment);
+                .bind(User::getComment, User::setComment);
     }
 
-    public void setBean(UserComment userComment){
+    public void setBean(User userComment){
         binder.setBean(userComment);
     }
 
@@ -91,11 +91,11 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
         return actionButtons;
     }
 
-    public Optional<UserComment> getBean(){
+    public Optional<User> getBean(){
         return Optional.of(binder.getBean());
     }
 
-    public Binder<UserComment> getBinder() {
+    public Binder<User> getBinder() {
         return binder;
     }
 
@@ -136,7 +136,7 @@ public class FormComponent extends PolymerTemplate<FormComponent.FormComponentMo
 
 
     /**
-     * This model binds properties between FormComponent and form-component.html
+     * This model binds properties between FormComponent and user-form.html
      */
     public interface FormComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.

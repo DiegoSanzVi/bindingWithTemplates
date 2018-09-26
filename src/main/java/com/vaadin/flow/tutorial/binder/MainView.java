@@ -8,11 +8,11 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.TemplateModel;
-import com.vaadin.flow.tutorial.binder.data.UserComment;
-import com.vaadin.flow.tutorial.binder.data.UsersCommentsRepository;
-import com.vaadin.flow.tutorial.binder.ui.CommentsGrid;
+import com.vaadin.flow.tutorial.binder.data.User;
+import com.vaadin.flow.tutorial.binder.data.UsersRepository;
+import com.vaadin.flow.tutorial.binder.ui.UsersGrid;
 import com.vaadin.flow.tutorial.binder.ui.FormButtonsBar;
-import com.vaadin.flow.tutorial.binder.ui.FormComponent;
+import com.vaadin.flow.tutorial.binder.ui.UserForm;
 
 /**
  * The main view contains a button and a click listener.
@@ -23,15 +23,15 @@ import com.vaadin.flow.tutorial.binder.ui.FormComponent;
 public class MainView extends PolymerTemplate<TemplateModel> {
 
 
-    @Id("formComponent")
-    private FormComponent commentForm;
+    @Id("user-form")
+    private UserForm commentForm;
 
-    @Id("vaadinGrid")
-    private CommentsGrid commentsGrid;
+    @Id("users-grid")
+    private UsersGrid commentsGrid;
 
     public MainView() {
         commentsGrid.addSelectionListener(selectionEvent -> {
-            Optional<UserComment> optionalUser = commentsGrid.getSelectedItems().stream().findAny();
+            Optional<User> optionalUser = commentsGrid.getSelectedItems().stream().findAny();
 
             if (optionalUser.isPresent()){
                 commentForm.setBean(optionalUser.get());
@@ -53,13 +53,13 @@ public class MainView extends PolymerTemplate<TemplateModel> {
                 return;
             }
 
-            Optional<UserComment> optionalUserComment = commentForm.getBean();
+            Optional<User> optionalUserComment = commentForm.getBean();
 
             if ( optionalUserComment.isPresent() ){
                 //System.out.println(optionalUserComment.get());
-                UserComment userComment = optionalUserComment.get();
+                User userComment = optionalUserComment.get();
 
-                UsersCommentsRepository.save( userComment );
+                UsersRepository.save( userComment );
 
                 commentsGrid.refresh(userComment);
                 commentForm.setBean( userComment);
@@ -71,10 +71,10 @@ public class MainView extends PolymerTemplate<TemplateModel> {
         });
 
         formButtonsBar.addDeleteListener(deleteEvent -> {
-            Optional<UserComment> optionalUserComment = commentsGrid.getSelectedItems().stream().findAny();
+            Optional<User> optionalUserComment = commentsGrid.getSelectedItems().stream().findAny();
 
             if ( optionalUserComment.isPresent() ){
-                UsersCommentsRepository.delete( optionalUserComment.get() );
+                UsersRepository.delete( optionalUserComment.get() );
                 commentsGrid.refreshAll();
                 commentForm.removeBean();
                 commentsGrid.deselectAll();

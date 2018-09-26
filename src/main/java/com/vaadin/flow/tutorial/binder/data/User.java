@@ -2,17 +2,17 @@ package com.vaadin.flow.tutorial.binder.data;
 
 import java.util.Objects;
 
-public class UserComment {
+public class User {
 
     private String email;
     private String firstName;
     private String lastName;
     private String comment;
 
-    public UserComment() {
+    public User() {
     }
 
-    public UserComment(String email, String firstName, String lastName, String comment) {
+    public User(String email, String firstName, String lastName, String comment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

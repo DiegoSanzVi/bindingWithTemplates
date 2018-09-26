@@ -1,20 +1,22 @@
 package com.vaadin.flow.tutorial.binder.data;
 
 import java.util.List;
+import java.util.Vector;
 
-public class UsersCommentsRepository {
+public class UsersRepository {
 
-    private static List<UserComment> userComments;
+    private static List<User> userComments;
 
     static {
-        userComments = DataGenerator.getUserComments();
+        // Vector is a thread safe version of ArrayList
+        userComments = new Vector<>(DataGenerator.getUserComments());
     }
 
-    public static List<UserComment> getUserComments(){
+    public static List<User> getUserComments(){
         return userComments;
     }
 
-    public static UserComment save(UserComment userComment){
+    public static User save(User userComment){
         System.out.print(userComment);
         int index = userComments.indexOf(userComment);
         if ( index >= 0){
@@ -25,7 +27,7 @@ public class UsersCommentsRepository {
         return userComment;
     }
 
-    public static void delete(UserComment userComment){
+    public static void delete(User userComment){
         userComments.remove(userComment);
     }
 }
