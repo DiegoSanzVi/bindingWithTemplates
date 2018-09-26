@@ -1,4 +1,4 @@
-package demo;
+package com.vaadin.flow.tutorial.binder.data;
 
 import java.util.Objects;
 
@@ -51,21 +51,6 @@ public class UserComment {
         this.comment = comments;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserComment)) return false;
-        UserComment comment = (UserComment) o;
-        return Objects.equals(getEmail(), comment.getEmail()) &&
-                Objects.equals(getFirstName(), comment.getFirstName()) &&
-                Objects.equals(getLastName(), comment.getLastName()) &&
-                Objects.equals(getComment(), comment.getComment());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEmail(), getFirstName(), getLastName(), getComment());
-    }
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package demo;
+package com.vaadin.flow.tutorial.binder.ui;
 
 import java.util.Optional;
 
@@ -8,10 +8,10 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.templatemodel.TemplateModel;
+import com.vaadin.flow.tutorial.binder.data.UserComment;
 
 @Tag("form-component")
 @HtmlImport("src/form-component.html")

@@ -1,4 +1,4 @@
-package demo;
+package com.vaadin.flow.tutorial.binder.ui;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;

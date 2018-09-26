@@ -1,4 +1,4 @@
-package demo;
+package com.vaadin.flow.tutorial.binder.data;
 
 import java.util.List;
 
