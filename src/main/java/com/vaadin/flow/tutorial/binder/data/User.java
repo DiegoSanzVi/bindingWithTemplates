@@ -1,7 +1,8 @@
 package com.vaadin.flow.tutorial.binder.data;
 
-import java.util.Objects;
-
+/**
+ *
+ */
 public class User {
 
     private String email;
@@ -12,6 +13,15 @@ public class User {
     public User() {
     }
 
+    /**
+     *
+     * User's constructor that initializes a new user.
+     *
+     * @param email email
+     * @param firstName first name
+     * @param lastName last name
+     * @param comment comment about the user
+     */
     public User(String email, String firstName, String lastName, String comment) {
         this.email = email;
         this.firstName = firstName;
@@ -19,18 +29,34 @@ public class User {
         this.comment = comment;
     }
 
+    /**
+     *
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     *
+     * @param firstName
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -54,7 +80,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "UserComment{" +
+        return "User{" +
                 "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

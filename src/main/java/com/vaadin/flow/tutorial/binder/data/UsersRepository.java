@@ -5,29 +5,29 @@ import java.util.Vector;
 
 public class UsersRepository {
 
-    private static List<User> userComments;
+    private static List<User> users;
 
     static {
         // Vector is a thread safe version of ArrayList
-        userComments = new Vector<>(DataGenerator.getUserComments());
+        users = new Vector<>(DataGenerator.getUsers());
     }
 
-    public static List<User> getUserComments(){
-        return userComments;
+    public static List<User> getUsers(){
+        return users;
     }
 
-    public static User save(User userComment){
-        System.out.print(userComment);
-        int index = userComments.indexOf(userComment);
+    public static User save(User user){
+        System.out.print(user);
+        int index = users.indexOf(user);
         if ( index >= 0){
-            userComments.set(index,userComment);
+            users.set(index,user);
         }else{
-            userComments.add(userComment);
+            users.add(user);
         }
-        return userComment;
+        return user;
     }
 
-    public static void delete(User userComment){
-        userComments.remove(userComment);
+    public static void delete(User user){
+        users.remove(user);
     }
 }

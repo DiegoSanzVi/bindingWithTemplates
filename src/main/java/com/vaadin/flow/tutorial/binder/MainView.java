@@ -53,11 +53,11 @@ public class MainView extends PolymerTemplate<TemplateModel> {
                 return;
             }
 
-            Optional<User> optionalUserComment = commentForm.getBean();
+            Optional<User> optionalUser = commentForm.getBean();
 
-            if ( optionalUserComment.isPresent() ){
+            if ( optionalUser.isPresent() ){
                 //System.out.println(optionalUserComment.get());
-                User userComment = optionalUserComment.get();
+                User userComment = optionalUser.get();
 
                 UsersRepository.save( userComment );
 
@@ -71,10 +71,10 @@ public class MainView extends PolymerTemplate<TemplateModel> {
         });
 
         formButtonsBar.addDeleteListener(deleteEvent -> {
-            Optional<User> optionalUserComment = commentsGrid.getSelectedItems().stream().findAny();
+            Optional<User> optionalUser = commentsGrid.getSelectedItems().stream().findAny();
 
-            if ( optionalUserComment.isPresent() ){
-                UsersRepository.delete( optionalUserComment.get() );
+            if ( optionalUser.isPresent() ){
+                UsersRepository.delete( optionalUser.get() );
                 commentsGrid.refreshAll();
                 commentForm.removeBean();
                 commentsGrid.deselectAll();
