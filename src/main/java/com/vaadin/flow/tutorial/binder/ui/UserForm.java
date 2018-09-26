@@ -13,6 +13,10 @@ import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import com.vaadin.flow.tutorial.binder.data.User;
 
+/**
+ * Example of how to combine Templates(recommended way of building UIs) with
+ * Binder(recommended way of building forms).
+ */
 @Tag("user-form")
 @HtmlImport("src/user-form.html")
 public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
@@ -32,30 +36,28 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
     @Id("action-buttons")
     private FormButtonsBar actionButtons;
 
-
     private Binder<User> binder;
-
-    private Method saveMethod;
-    private Method deleteMethod;
 
     /**
      * Creates a new FormComponent.
      */
     public UserForm() {
         initBinder();
-        initListeners();
     }
 
+    /**
+     * Initializes the binder and associates the validator to each field form's field.
+     */
     private void initBinder() {
         binder = new Binder<>();
 
         // email
         binder.forField(email).withValidator(
-                new EmailValidator(    "This doesn't look like a valid email address")
+                new EmailValidator("This doesn't look like a valid email address")
         ).bind(User::getEmail, User::setEmail);
 
         // firstName
-        binder.forField(firstName).withValidator( firstName -> firstName.length() > 1,
+        binder.forField(firstName).withValidator(firstName -> firstName.length() > 1,
                 "The first name must contains at least 2 characters").asRequired()
                 .bind(User::getFirstName, User::setFirstName);
 
@@ -68,15 +70,27 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
                 .bind(User::getComment, User::setComment);
     }
 
-    public void setBean(User userComment){
-        binder.setBean(userComment);
+    /**
+     * Sets the binder of the UserForm
+     * @param user bean
+     */
+    public void setBean(User user) {
+        binder.setBean(user);
     }
 
-    public void removeBean(){
+    /**
+     * Removes the binder
+     */
+    public void removeBean() {
         binder.removeBean();
     }
 
-    public void setEnabled(boolean enabled){
+    /**
+     * Enables or disables the user form fields.
+     *
+     * @param enabled true or false.
+     */
+    public void setEnabled(boolean enabled) {
         email.setEnabled(enabled);
         firstName.setEnabled(enabled);
         lastName.setEnabled(enabled);
@@ -87,63 +101,36 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
         actionButtons.setDeleteDisabled(!enabled);
     }
 
+    /**
+     * It returns the actions buttons(save,cancel,delete).
+     *
+     * @return
+     */
     public FormButtonsBar getActionButtons() {
         return actionButtons;
     }
 
-    public Optional<User> getBean(){
+    /**
+     * Gets the bean(user) from the binder.
+     *
+     * @return
+     */
+    public Optional<User> getBean() {
         return Optional.of(binder.getBean());
     }
 
+    /**
+     * Gets the binder of the UserForm
+     * @return binder
+     */
     public Binder<User> getBinder() {
         return binder;
     }
-
-    public void initListeners() {
-
-        actionButtons.addSaveListener(saveEvent -> {
-            if ( binder.validate().isOk()){
-                if (saveMethod != null) {
-                    saveMethod.execute();
-                }
-            }
-        });
-
-        actionButtons.addCancelListener(cancelEvent -> {
-            binder.removeBean();
-        });
-
-        actionButtons.addDeleteListener(deleteEvent -> {
-            if (binder.validate().isOk()) {
-
-                binder.removeBean();
-
-                if (deleteMethod != null) {
-                    deleteMethod.execute();
-                }
-            }
-        });
-
-    }
-
-    public void addSaveListener(Method method) {
-        saveMethod = method;
-    }
-
-    public void addDeleteListener(Method method) {
-        deleteMethod = method;
-    }
-
 
     /**
      * This model binds properties between FormComponent and user-form.html
      */
     public interface FormComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
-    }
-
-    @FunctionalInterface
-    public interface Method {
-        public void execute();
     }
 }

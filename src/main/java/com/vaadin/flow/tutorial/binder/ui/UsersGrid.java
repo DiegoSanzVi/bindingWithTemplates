@@ -9,15 +9,18 @@ import com.vaadin.flow.tutorial.binder.data.User;
 import com.vaadin.flow.tutorial.binder.data.UsersRepository;
 
 /**
- * UsersGrid it uses to display users in the system.
+ * UsersGrid is used to display users in the system.
  */
 public class UsersGrid extends Grid<User> {
 
     /**
-     * DataProvider of the grid.
+     * DataProvider of the UsersGrid.
      */
     private ListDataProvider<User> dataProvider;
 
+    /**
+     * Initializes the UsersGrid.
+     */
     public UsersGrid() {
         addColumn(User::getEmail).setHeader("email")
                 .setComparator(Comparator.comparing(User::getEmail)).setSortable(true);
@@ -31,17 +34,23 @@ public class UsersGrid extends Grid<User> {
         initDataProvider();
     }
 
+    /**
+     * Initializes the UsersGrid.
+     */
     private void initDataProvider() {
         dataProvider = DataProvider.ofCollection(UsersRepository.getUsers());
         setDataProvider(dataProvider);
     }
 
+    /**
+     * Refreshes the elements of the data provider.
+     */
     public void refreshAll() {
         dataProvider.refreshAll();
     }
 
     /**
-     * Refresh a user in the grid.
+     * Refreshes a user in the UsersGrid.
      *
      * @param user user
      */
