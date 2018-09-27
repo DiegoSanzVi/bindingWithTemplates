@@ -8,7 +8,7 @@ import org.jfairy.producer.person.Person;
 
 /**
  * It generates random users using a fake data generator(Fairy).
- */
+        */
 public class DataGenerator {
 
     private static final Fairy fairy = Fairy.create();

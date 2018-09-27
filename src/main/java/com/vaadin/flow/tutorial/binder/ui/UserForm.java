@@ -39,7 +39,7 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
     private Binder<User> binder;
 
     /**
-     * Creates a new FormComponent.
+     * Creates a new UserForm.
      */
     public UserForm() {
         initBinder();
@@ -79,7 +79,7 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
     }
 
     /**
-     * Removes the binder
+     * Clears the form and disconnects any bean.
      */
     public void removeBean() {
         binder.removeBean();
@@ -104,7 +104,7 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
     /**
      * It returns the actions buttons(save,cancel,delete).
      *
-     * @return
+     * @return actionButtons formButtons
      */
     public FormButtonsBar getActionButtons() {
         return actionButtons;
@@ -113,7 +113,7 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
     /**
      * Gets the bean(user) from the binder.
      *
-     * @return
+     * @return beans
      */
     public Optional<User> getBean() {
         return Optional.of(binder.getBean());
@@ -121,6 +121,7 @@ public class UserForm extends PolymerTemplate<UserForm.FormComponentModel> {
 
     /**
      * Gets the binder of the UserForm
+     *
      * @return binder
      */
     public Binder<User> getBinder() {

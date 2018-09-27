@@ -66,12 +66,12 @@ public class MainView extends PolymerTemplate<TemplateModel> {
             Optional<User> optionalUser = userForm.getBean();
 
             if (optionalUser.isPresent()) {
-                User userComment = optionalUser.get();
+                User user = optionalUser.get();
 
-                UsersRepository.save(userComment);
+                user = UsersRepository.save(user);
 
-                usersGrid.refresh(userComment);
-                userForm.setBean(userComment);
+                usersGrid.refresh(user);
+                userForm.setBean(user);
             }
         });
 
@@ -87,7 +87,6 @@ public class MainView extends PolymerTemplate<TemplateModel> {
             if (optionalUser.isPresent()) {
                 UsersRepository.delete(optionalUser.get());
                 usersGrid.refreshAll();
-                userForm.removeBean();
                 usersGrid.deselectAll();
             }
         });
